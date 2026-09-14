@@ -1,0 +1,29 @@
+name: Plugin quality gate
+
+on:
+  pull_request:
+  push:
+    branches: [main, release]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer:v2
+
+      - name: Install quality tooling
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run quality gate
+        run: composer test

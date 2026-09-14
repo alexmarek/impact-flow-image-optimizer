@@ -1,0 +1,28 @@
+{
+  "name": "alexmarek/impact-flow-image-optimizer",
+  "description": "Development quality tooling for the Impact Flow Image Optimizer plugin.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.1"
+  },
+  "require-dev": {
+    "automattic/vipwpcs": "^3.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "lint": "find . -path './vendor' -prune -o -name '*.php' -exec php -l {} \\;",
+    "regression": "php tests/2026-09-14-image-policy.php",
+    "phpcs": "phpcs --standard=phpcs.xml.dist",
+    "test": [
+      "@lint",
+      "@regression",
+      "@phpcs"
+    ]
+  }
+}
